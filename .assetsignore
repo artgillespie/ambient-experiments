@@ -1,0 +1,15 @@
+# Files that must not be uploaded as public site assets (gitignore syntax).
+.git
+.gitignore
+.assetsignore
+.wrangler
+node_modules
+wrangler.jsonc
+package.json
+package-lock.json
+tools
+test
+out
+*.wav
+*.md
+LICENSE

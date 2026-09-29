@@ -1,0 +1,13 @@
+// Cloudflare Workers, static assets only (no Worker script, no build step).
+// The repo root *is* the site: every experiment is served at /<name>/.
+// Deploy: npx wrangler@4 deploy  →  https://ambient.artgillespie.workers.dev
+{
+  "name": "ambient",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "assets": {
+    // Dev-only files are excluded by .assetsignore; headers come from _headers.
+    "directory": ".",
+    "html_handling": "auto-trailing-slash"
+  }
+}

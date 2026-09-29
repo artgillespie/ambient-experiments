@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ambient experiments</title>
+<meta name="description" content="Generative ambient installations for the web: music, sound design and image made live in the browser.">
+<style>
+  :root { --ink: #2b2a33; --soft: rgba(43, 42, 51, .6); --line: rgba(43, 42, 51, .16); --bg: #f4efe4; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #e9e4f2; --soft: rgba(233, 228, 242, .6); --line: rgba(233, 228, 242, .18); --bg: #0b0c12; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; padding: 16px; }
+  main { width: min(560px, 100%); }
+  h1 { font-weight: 400; font-style: italic; font-size: clamp(36px, 7vw, 56px); margin: 0 0 .2em; }
+  p { color: var(--soft); letter-spacing: .03em; line-height: 1.6; margin: 0 0 2.4em; }
+  ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  li { border-bottom: 1px solid var(--line); }
+  a { display: block; padding: 1.1em 0; color: inherit; text-decoration: none; }
+  a:hover .name { font-style: italic; }
+  .name { font-size: 22px; }
+  .what { display: block; color: var(--soft); font-size: 15px; margin-top: .3em; line-height: 1.5; }
+  footer { margin-top: 2.4em; font-size: 13px; color: var(--soft); }
+  footer a { display: inline; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>ambient experiments</h1>
+  <p>Generative installations for the web: music, sound design and image, made live in your browser.</p>
+  <ul>
+    <li><a href="wet-on-wet/"><span class="name">wet on wet</span>
+      <span class="what">Slow modal music and tape loops through a vast modulated reverb, painted live as dripping watercolor.</span></a></li>
+  </ul>
+  <footer>Open source on <a href="https://github.com/artgillespie/ambient-experiments">GitHub</a> · best with headphones</footer>
+</main>
+</body>
+</html>

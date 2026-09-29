@@ -9,6 +9,8 @@ and WebGL, openable from any static file server.
 |---|---|
 | [**wet-on-wet**](wet-on-wet/) | Slow modal music and Eno-style tape loops through *Nebula*, a vast modulated FDN reverb in the spirit of Valhalla Supermassive, painted live as dripping watercolor (WebGL2 fluid + pigment simulation). |
 
+Live: **https://ambient.artgillespie.workers.dev**
+
 ## Running an experiment
 
 ```sh
@@ -17,6 +19,16 @@ npm start          # http://localhost:8080 (Node ≥ 20, nothing to install)
 ```
 
 Each experiment's README describes its controls, URL parameters and internals.
+
+## Deploying
+
+The repo root is the site (Cloudflare Workers static assets, no build step). Every
+experiment is served at `/<name>/`; `index.html` at the root is the gallery, so add a
+line there for each new piece. Dev-only files are kept out by `.assetsignore`.
+
+```sh
+npx wrangler@4 deploy      # → https://ambient.artgillespie.workers.dev
+```
 
 ## Conventions
 

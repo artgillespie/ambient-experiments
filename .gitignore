@@ -2,3 +2,4 @@ node_modules/
 out/
 *.wav
 .DS_Store
+.wrangler/

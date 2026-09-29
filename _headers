@@ -1,0 +1,4 @@
+# Response headers for Cloudflare static assets.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
