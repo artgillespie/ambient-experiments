@@ -1,0 +1,14 @@
+{
+  "name": "@ambient-experiments/wet-on-wet",
+  "version": "0.1.0",
+  "description": "A generative ambient web installation: modal tape-loop music through a vast modulated FDN reverb, painted live as dripping watercolor. Zero dependencies.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "render": "node tools/render.mjs",
+    "ir": "node tools/render.mjs --ir --secs 20"
+  },
+  "engines": { "node": ">=20" }
+}

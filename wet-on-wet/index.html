@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>wet on wet</title>
+<meta name="description" content="A generative ambient installation: slow modal music through a vast modulated reverb, painted live in dripping watercolor.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='15' r='11' fill='%232f86bd' opacity='.75'/%3E%3Ccircle cx='20' cy='19' r='8' fill='%23cf3f67' opacity='.55'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #2b2a33;
+    --ink-soft: rgba(43, 42, 51, .62);
+    --veil: rgba(246, 242, 234, .55);
+    --line: rgba(43, 42, 51, .18);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  }
+  body.night {
+    --ink: #e9e4f2;
+    --ink-soft: rgba(233, 228, 242, .6);
+    --veil: rgba(10, 11, 20, .45);
+    --line: rgba(233, 228, 242, .2);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #f4efe4; color: var(--ink); font-family: var(--serif); }
+  body.night { background: #07080d; }
+  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; touch-action: none; cursor: crosshair; }
+  body:not(.awake) canvas { cursor: none; }
+
+  #intro {
+    position: fixed; inset: 0; display: grid; place-items: center; text-align: center;
+    background: radial-gradient(ellipse at center, var(--veil), transparent 70%);
+    transition: opacity 3.5s ease, visibility 0s linear 3.5s;
+  }
+  #intro.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+  #intro h1 { font-weight: 400; font-style: italic; font-size: clamp(44px, 9vw, 112px); letter-spacing: .01em; margin: 0; line-height: 1; }
+  #intro p { margin: .9em 0 2.2em; font-size: clamp(15px, 1.6vw, 19px); color: var(--ink-soft); letter-spacing: .06em; }
+  #begin {
+    font: inherit; font-size: 17px; letter-spacing: .28em; text-transform: lowercase; color: var(--ink);
+    background: none; border: 1px solid var(--line); border-radius: 999px; padding: .85em 2.4em .85em 2.64em; cursor: pointer;
+    transition: background .6s, border-color .6s;
+  }
+  #begin:hover, #begin:focus-visible { background: var(--veil); border-color: var(--ink-soft); outline: none; }
+  #intro small { display: block; margin-top: 2.4em; font-size: 13px; color: var(--ink-soft); letter-spacing: .05em; }
+
+  .fade { opacity: 0; transition: opacity 1.6s ease; }
+  body.awake .fade { opacity: 1; }
+  body.bare .fade, body.bare #chord { opacity: 0 !important; }
+
+  #chord {
+    position: fixed; left: max(16px, 3vw); bottom: max(16px, 3vh); font-size: 15px; letter-spacing: .08em;
+    color: var(--ink-soft); opacity: .8; transition: opacity 4s ease; pointer-events: none;
+  }
+  #chord .dot { margin: 0 .7em; opacity: .5; }
+  #chord .name { font-style: italic; }
+
+  #hud {
+    position: fixed; right: max(16px, 3vw); bottom: max(16px, 3vh); display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
+    padding: 16px 18px; border-radius: 14px; background: var(--veil); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--line); max-width: calc(100vw - 32px);
+  }
+  #hud label { display: grid; grid-template-columns: 70px 150px; align-items: center; gap: 12px; font-size: 13px; letter-spacing: .1em; color: var(--ink-soft); }
+  #hud .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  #hud button {
+    font: inherit; font-size: 13px; letter-spacing: .1em; color: var(--ink); background: none; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 999px; padding: .45em 1.1em;
+  }
+  #hud button:hover { border-color: var(--ink-soft); }
+  #seed { font-size: 12px; color: var(--ink-soft); letter-spacing: .08em; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; background: none; height: 18px; }
+  input[type=range]::-webkit-slider-runnable-track { height: 1px; background: var(--ink-soft); }
+  input[type=range]::-moz-range-track { height: 1px; background: var(--ink-soft); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; margin-top: -6px; border-radius: 50%; background: var(--ink); border: none; }
+  input[type=range]::-moz-range-thumb { width: 13px; height: 13px; border-radius: 50%; background: var(--ink); border: none; }
+
+  #paused { position: fixed; inset: 0; display: none; place-items: center; font-style: italic; font-size: 22px; letter-spacing: .2em; color: var(--ink-soft); pointer-events: none; }
+  body.paused #paused { display: grid; }
+  #nogl { position: fixed; top: 16px; left: 16px; right: 16px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  @media (max-width: 560px) {
+    #hud label { grid-template-columns: 60px 1fr; }
+    #hud { left: 16px; }
+    #chord { bottom: auto; top: 16px; }
+  }
+</style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+
+  <div id="intro">
+    <div>
+      <h1>wet on wet</h1>
+      <p>a generative ambient installation</p>
+      <button id="begin">begin</button>
+      <small>headphones or good speakers · touch the painting to add a drop</small>
+    </div>
+  </div>
+
+  <div id="chord"></div>
+  <div id="paused">held</div>
+  <p id="nogl" hidden>This browser can't run the WebGL2 painting, but the music will still play.</p>
+
+  <div id="hud" class="fade">
+    <label>volume <input id="volume" type="range" min="0" max="1" step="0.01"></label>
+    <label>space <input id="space" type="range" min="0" max="1" step="0.01"></label>
+    <label>weather <input id="density" type="range" min="0" max="1" step="0.01"></label>
+    <label>wind <input id="wind" type="range" min="0" max="1" step="0.01"></label>
+    <div class="row">
+      <button id="night" title="N">day / night</button>
+      <button id="full" title="F">fullscreen</button>
+      <button id="reseed" title="R">new piece</button>
+    </div>
+    <span id="seed"></span>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
