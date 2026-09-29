@@ -27,8 +27,8 @@ export class Engine {
     this.time = 0;
     this.frames = 0;
     this.volume = 0.8; this.vol = 0;
-    this.space = 0.5; // user macro: room size/decay
-    this.wind = 0.6; // user macro: aeolian harp + noise sweep level
+    this.space = 0.58; // user macro: room size/decay
+    this.wind = 0.18; // user macro: aeolian harp + noise sweep level
     this.hpL = 0; this.hpR = 0;
     this.peak = 0; this.rms = 0;
     this.padBright = 0.5;

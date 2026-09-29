@@ -13,9 +13,9 @@ const qs = new URLSearchParams(location.search);
 const state = {
   seed: +(qs.get('seed') || (Math.random() * 1e6) | 0),
   volume: +(qs.get('volume') ?? 0.8),
-  space: +(qs.get('space') ?? 0.55),
-  density: +(qs.get('density') ?? 0.5),
-  wind: +(qs.get('wind') ?? 0.6),
+  space: +(qs.get('space') ?? 0.58),
+  density: +(qs.get('density') ?? 0.47),
+  wind: +(qs.get('wind') ?? 0.18),
   night: qs.get('night') === '1',
   weather: 0.3,
   started: false,

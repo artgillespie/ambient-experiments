@@ -39,7 +39,7 @@ export class Composer {
     this.nextChordAt = 0;
     this.pad = [];
     this.queue = []; // [{at, midi, vel, inst, pan}]
-    this.density = 0.5; // user bias
+    this.density = 0.47; // user bias (the "weather" slider)
     this.phaseW = [r() * 6.28, r() * 6.28, r() * 6.28];
     this.makeLoops();
     this.nextPhraseAt = 55 + r() * 40;
